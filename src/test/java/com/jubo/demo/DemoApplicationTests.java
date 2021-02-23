@@ -12,7 +12,7 @@ class DemoApplicationTests {
     @Test
     public void testAdd() {
         int num = mySrv.add(2,6);
-        assert num == 8;
+        assert num == 6;
 
         System.out.println("hello");
     }
