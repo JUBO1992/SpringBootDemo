@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>City List</title>
+</head>
+<body>
+    <hr/>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <tr th:each="city : ${list}">
+            <!-- EL JSTL-->
+            <td th:text = "${city.id}"></td>
+            <td th:text = "${city.name}"></td>
+        </tr>
+    </table>
+</body>
+</html>

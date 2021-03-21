@@ -1,5 +1,6 @@
 package com.jubo.demo;
 
+import com.jubo.demo.practice.service.MainService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DemoApplicationTests {
 
     @Autowired
-    MyService mySrv;
+    MainService mySrv;
     @Test
     public void testAdd() {
         int num = mySrv.add(2,6);

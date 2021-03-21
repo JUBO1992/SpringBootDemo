@@ -1,4 +1,4 @@
-package com.jubo.demo;
+package com.jubo.demo.practice.service;
 
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @date 2021/02/23
  */
 @Service
-public class MyService {
+public class MainService {
     public int add(int a, int b) {
         return a+b;
     }

@@ -1,0 +1,37 @@
+server:
+  port: 9999
+#  servlet:
+#    context-path: /boot
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/login
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spdemo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+  web:
+    resources:
+      # 会被addResourceHandlers覆盖
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:d:/uploads/
+
+mybatis:
+  mapper-locations: classpath:com/jubo/demo/*/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.jubo.demo.system.mapper: debug
+    com.jubo.demo.practice.mapper: debug
+
+# 自定义工程配置
+project-config:
+  system-name: ooxx数据分析平台
+  upload-path: d:/uploads
