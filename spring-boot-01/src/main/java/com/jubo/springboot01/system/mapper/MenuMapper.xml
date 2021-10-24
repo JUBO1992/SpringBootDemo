@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jubo.springboot01.system.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jubo.springboot01.system.bean.Menu">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="roles" property="roles"/>
+        <result column="index" property="index"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, roles, index
+    </sql>
+
+</mapper>

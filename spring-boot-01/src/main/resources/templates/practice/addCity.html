@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>City Add</title>
+</head>
+<body>
+<hr/>
+<h1 th:text="${success}"></h1>
+<hr/>
+
+<form action="add" method="post">
+    id: <input name="id" type="text">
+    <br/>
+    name: <input name="name" type="text">
+    <br/>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

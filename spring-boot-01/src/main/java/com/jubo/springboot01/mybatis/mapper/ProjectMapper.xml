@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jubo.springboot01.mybatis.mapper.ProjectMapper">
+
+    <resultMap id="projectJoinEmps" type="project">
+        <id column="pid" property="pid"></id>
+        <result column="pname" property="pname"></result>
+        <result column="money" property="money"></result>
+        <!-- 一对多 集合属性 collection -->
+        <collection property="projectRecords" ofType="projectRecord">
+            <id column="empno" property="empno"></id>
+            <id column="pid" property="pid"></id>
+            <!-- 一对一 -->
+            <association property="emp" javaType="emp">
+                <id property="empno" column="empno"></id>
+                <result property="ename" column="ename"></result>
+                <result property="job" column="job"></result>
+                <result property="sal" column="sal"></result>
+                <result property="deptno" column="deptno"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="findProjectJoinEmpsByPid" resultMap="projectJoinEmps">
+        select * from
+        project p
+        left join projectrecord pr
+        on p.pid = pr.pid
+        left join emp e
+        on e.empno = pr.empno
+        where p.pid = #{pid}
+    </select>
+
+    <select id="findByCondition" resultType="emp">
+        select * from
+        <where>
+            <if test="empno != null">
+                and empno = #{empnp}
+            </if>
+            <if test="ename != null and ename != ''">
+                and ename like concat('%', #{ename},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findByCondition" resultType="emp">
+        select * from
+        <where>
+            <choose>
+                <when test="empno != null">
+                    and empno = #{empnp}
+                </when>
+                <when test="ename != null and ename != ''">
+                    and ename like concat('%', #{ename},'%')
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <update id="updateEmpByCondition">
+        update emp
+        <set>
+            <if test="ename != null and ename != ''">
+                ,ename = #{ename}
+            </if>
+            <if test="job != null and jbo != ''">
+                , job = #{job}
+            </if>
+        </set>
+    </update>
+
+    <!--
+    trim标签：where、set是trim的特殊情况
+    prefix：要动态添加的前缀
+    prefixOverrides：要干掉的前缀
+    suffix：要补充的后缀
+    suffixOverrides：要干掉的后缀
+    -->
+    <update id="updateEmpByCondition">
+        update emp
+        <trim prefix="set" prefixOverrides="," suffix="" suffixOverrides="">
+            <if test="ename != null and ename != ''">
+                ,ename = #{ename}
+            </if>
+            <if test="job != null and jbo != ''">
+                , job = #{job}
+            </if>
+        </trim>
+    </update>
+
+    <!--
+    foreach标签：进行元素遍历
+    collection="" 遍历的集合或者数组
+    separator="" 多个元素的时候，用什么文字分隔
+    open="" 以什么开头
+    close="" 以什么结尾
+    item="" 中间变量名
+    -->
+    <select id="findByEmpnos" resultType="emp">
+        select * from emp where empno in
+        <foreach collection="array" separator="," open="{" close="}" item="empno">
+            #{empno}
+        </foreach>
+    </select>
+
+
+    <select id="findEmpsByDeptno" resultType="emp">
+        select * from emp where deptno = #{deptno}
+    </select>
+
+    <!--
+    select="EmpMapper.findEmpsByDeptno" 调用的另一个sql语句
+    javaType="list" 实体类的属性数类型
+    column="deptno" 给另一个sql语句传入参数列
+    jdbcType="INTEGER" 参数对于JDBC的数据类型
+    fetchType="eager" 加载方式 eager积极加载 lazy延迟加载
+    -->
+    <resultMap id="deptJoinEmps" type="dept">
+        <id column="deptno" property="deptno"></id>
+        <result column="dname" property="danme"></result>
+        <result column="loc" property="loc"></result>
+        <collection property="empList"
+                    select="EmpMapper.findEmpsByDeptno"
+                    javaType="list"
+                    column="deptno"
+                    jdbcType="INTEGER"
+                    fetchType="eager"
+        ></collection>
+    </resultMap>
+    <select id="findDeptByDeptno" resultMap="deptJoinEmps">
+        select * from dept where deptno = #{deptno}
+    </select>
+
+</mapper>
